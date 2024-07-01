@@ -1,5 +1,8 @@
 import express, {Application, Request, Response} from "express";
 import axios from "axios";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app: Application = express();
 app.set("trust proxy", true);
@@ -34,7 +37,7 @@ app.get("/api/hello", async (req: Request, res: Response) => {
             console.log("Local IP detected. Using default location.");
         }
 
-        const weatherApiKey = "03f36c6af426d9b0ee4ee3bda74bce68";
+        const weatherApiKey = process.env.weatherApiKey;
         const weatherResponse = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${weatherApiKey}&units=metric`);
         const temperature = weatherResponse.data.main.temp;
 

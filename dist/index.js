@@ -14,6 +14,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const axios_1 = __importDefault(require("axios"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.set("trust proxy", true);
 app.get("/", (_req, res) => {
@@ -43,7 +45,7 @@ app.get("/api/hello", (req, res) => __awaiter(void 0, void 0, void 0, function* 
         else {
             console.log("Local IP detected. Using default location.");
         }
-        const weatherApiKey = "03f36c6af426d9b0ee4ee3bda74bce68";
+        const weatherApiKey = process.env.weatherApiKey;
         const weatherResponse = yield axios_1.default.get(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${weatherApiKey}&units=metric`);
         const temperature = weatherResponse.data.main.temp;
         res.json({
